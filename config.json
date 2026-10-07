@@ -7,7 +7,6 @@
   "broadcast_notice": "Primordial ডাউনলোডার সম্পূর্ণ অ্যাড-মুক্ত ও দ্রুতগতির।",
   "notice_url": "http://db.vegastar.top/",
   "free_mode": true,
-  "force_update": false,
   "pc_download_url": "http://db.vegastar.top/MediaDownloader_Setup.exe",
   "apk_download_url": "http://db.vegastar.top/MediaDownloader.apk",
   "changelog": "• প্রথম অফিসিয়াল রিলিজ\n• ফুল এইচডি ও অডিও সাপোর্ট\n• জিরো অ্যাড ও নো-কুকি"
