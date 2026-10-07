@@ -1,18 +1,18 @@
 {
     "app_name":  "Primordial Downloader",
-    "latest_version":  "1.0.0",
-    "min_supported_version":  "1.0.0",
+    "latest_version":  "2.3.4.101",
+    "min_supported_version":  "2.3.4.101",
     "creator":  "Primordial / Vegastar",
     "creator_url":  "http://db.vegastar.top/",
-    "broadcast_notice":  "Primordial ডাউনলোডার সম্পূর্ণ অ্যাড-মুক্ত ও দ্রুতগতির।",
+    "broadcast_notice":  "📢 এটি সেন্ট্রাল কন্ট্রোল থেকে পাঠানো লাইভ নোটিশ! ভার্সন ২.৩.৪.১০১ টেস্ট চলছে।",
     "notice_url":  "http://db.vegastar.top/",
     "free_mode":  true,
-    "force_update":  false,
-    "active_bots_count":  48,
+    "force_update":  true,
+    "active_bots_count":  1,
     "bot_network_status":  "active",
     "server_connecting_notice":  "বিশ্বজুড়ে উচ্চগতির ক্লাউড প্রসেসিং বটের মাধ্যমে মিডিয়া ডাউনলোডার পরিচালিত হচ্ছে।",
     "fallback_pc_advice":  "ক্লাউড ট্রাফিক এড়াতে এবং ১০০% দ্রুতগতির ব্যক্তিগত ডাউনলোডের জন্য আপনার নিজের পিসিতে Primordial ইঞ্জিন সেটআপ ব্যবহার করুন।",
     "pc_download_url":  "http://db.vegastar.top/MediaDownloader_Setup.exe",
     "apk_download_url":  "http://db.vegastar.top/MediaDownloader.apk",
-    "changelog":  "• প্রথম অফিসিয়াল রিলিজ\n• ফুল এইচডি ও অডিও সাপোর্ট\n• জিরো অ্যাড ও নো-কুকি"
+    "changelog":  "• সেন্ট্রাল ভার্সন ২.৩.৪.১০১ টেস্ট আপডেট\n• ওল্ড ভার্সন লকডাউন সক্রিয়\n• জিরো অ্যাড ও আনলিমিটেড স্পিড"
 }
