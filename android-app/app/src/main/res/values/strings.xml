@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">Primordial</string>
-    <string name="admin_receiver_label">Primordial</string>
-    <string name="admin_receiver_description">Allow to use it for Primordial Downloader!</string>
-</resources>
