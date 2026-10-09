@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Primordial - High-Speed Media Downloader</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f8fafc',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200">
+
+  <!-- ========================================== -->
+  <!-- SCREEN 1: SMART DEVICE-BASED APP DOWNLOAD  -->
+  <!-- (Shown for Android & Windows PC browsers)   -->
+  <!-- ========================================== -->
+  <div id="deviceAppLanding" class="hidden min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+    <div class="max-w-xl w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl text-center relative overflow-hidden">
+      
+      <!-- Decorative background blur -->
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Device Icon -->
+      <div id="deviceIconWrapper" class="w-20 h-20 rounded-2xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-6 text-3xl shadow-inner border border-blue-100 dark:border-blue-900/50">
+        <i id="deviceHeroIcon" class="fa-brands fa-android"></i>
+      </div>
+
+      <!-- Title & Description -->
+      <h1 id="deviceLandingTitle" class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-3">
+        Primordial Downloader
+      </h1>
+      <p id="deviceLandingDesc" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6 max-w-md mx-auto">
+        Install the official application for high-speed background downloading, instant notifications, and ad-free experience.
+      </p>
+
+      <!-- Main Download Action Button -->
+      <div class="mb-2">
+        <a id="deviceDownloadBtn" href="/MediaDownloader.apk" download class="w-full py-4 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base sm:text-lg flex items-center justify-center gap-3 transition-all transform active:scale-98 shadow-lg shadow-blue-600/25">
+          <i id="deviceBtnIcon" class="fa-solid fa-download"></i>
+          <span id="deviceBtnText">Download Android APK</span>
+        </a>
+      </div>
+
+      <!-- Or continue to web directly -->
+      <div class="mb-5">
+        <button type="button" onclick="showWebDownloader()" class="text-xs text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 font-semibold underline underline-offset-4 transition">
+          বা ইনস্টল না করে সরাসরি ব্রাউজারে ব্যবহার করুন (Use Web Downloader)
+        </button>
+      </div>
+
+      <!-- Feature Pill Badges -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
+        <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center gap-1.5 border border-slate-200 dark:border-slate-700">
+          <i class="fa-solid fa-bolt text-amber-500"></i> Max Speed
+        </span>
+        <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center gap-1.5 border border-slate-200 dark:border-slate-700">
+          <i class="fa-solid fa-shield-halved text-emerald-500"></i> Ad-Free
+        </span>
+        <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center gap-1.5 border border-slate-200 dark:border-slate-700">
+          <i class="fa-solid fa-infinity text-blue-500"></i> 100% Free
+        </span>
+      </div>
+
+      <!-- Share QR Code Button -->
+      <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-center text-xs">
+        <button type="button" onclick="openQrModal()" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1.5 font-medium">
+          <i class="fa-solid fa-qrcode"></i>
+          <span>Scan QR to get app on another device</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- SCREEN 2: FULL WEB DOWNLOADER INTERFACE     -->
+  <!-- (Direct for Apple devices & Android In-App)-->
+  <!-- ========================================== -->
+  <div id="webDownloaderWrapper" class="hidden flex-1 flex flex-col min-h-screen">
+    
+    <!-- Top Header -->
+    <header class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-40">
+      <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="resetApp()">
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white text-base shadow-sm">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-base sm:text-xl tracking-tight">Primordial</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Active
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header actions -->
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="openWelcomeGuide()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition shadow-xs active:scale-95">
+            <i class="fa-solid fa-circle-question text-blue-500"></i>
+            <span>গাইড ও প্ল্যাটফর্ম</span>
+          </button>
+          <button id="showQrBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/70 dark:hover:bg-blue-900/80 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/80 transition shadow-sm active:scale-95">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>Get App / Share</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 sm:py-14">
+      
+      <!-- Hero Header -->
+      <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
+          Primordial
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+          Paste any video or audio link to convert and download instantly in up to 4K resolution
+        </p>
+      </div>
+
+      <!-- Main Input Card -->
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 sm:p-3 shadow-md max-w-3xl mx-auto transition-all">
+        <form id="urlForm" class="flex flex-col sm:flex-row gap-2.5">
+          <div class="relative flex-1 flex items-center">
+            <i class="fa-solid fa-link absolute left-4 text-slate-400 text-sm"></i>
+            <input 
+              type="url" 
+              id="videoUrl" 
+              required
+              placeholder="Paste any video or audio link here..."
+              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm sm:text-base rounded-xl pl-11 pr-20 py-3.5 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition font-medium"
+            >
+            <button 
+              type="button" 
+              id="pasteBtn"
+              class="absolute right-2.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition shadow-xs"
+            >
+              Paste
+            </button>
+          </div>
+          <button 
+            type="submit" 
+            id="submitBtn"
+            class="px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm sm:text-base shadow-sm flex items-center justify-center gap-2 transition active:scale-95"
+          >
+            <span>Get Media</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Loading State with Real-Time Percentage -->
+      <div id="loadingState" class="hidden mt-8 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-md mx-auto text-center shadow-sm">
+        <div class="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+          <span id="loadingStepText" class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+            Analyzing media stream...
+          </span>
+          <span id="loadingPercentText" class="font-mono text-blue-600 dark:text-blue-400 text-sm font-bold">0%</span>
+        </div>
+        <div class="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+          <div id="loadingProgressBar" class="bg-blue-600 h-full w-0 transition-all duration-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div id="errorState" class="hidden mt-6 p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs sm:text-sm max-w-3xl mx-auto flex items-center gap-3">
+        <i class="fa-solid fa-circle-exclamation flex-shrink-0 text-base"></i>
+        <div id="errorText">Failed to load media info. Please check the URL.</div>
+      </div>
+
+      <!-- Result View -->
+      <div id="resultState" class="hidden mt-8 max-w-3xl mx-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-7 shadow-sm">
+          
+          <!-- Media Summary Card -->
+          <div class="flex flex-col sm:flex-row gap-4 items-start pb-5 border-b border-slate-100 dark:border-slate-800">
+            <div class="relative w-full sm:w-56 aspect-video rounded-xl overflow-hidden bg-slate-900 flex-shrink-0 border border-slate-200 dark:border-slate-800 flex items-center justify-center shadow-inner">
+              <img id="resThumbnail" src="" alt="Thumbnail" class="w-full h-full object-contain">
+              <div id="resDuration" class="absolute bottom-1.5 right-1.5 bg-black/80 backdrop-blur-xs px-2 py-0.5 rounded text-[11px] font-mono text-white font-medium"></div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h2 id="resTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white line-clamp-2 leading-snug mb-1.5"></h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Select quality and format below to download:</p>
+            </div>
+          </div>
+
+          <!-- Custom Rename Input -->
+          <div class="mt-5 p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
+            <div class="flex items-center justify-between mb-1.5">
+              <label for="customFileName" class="block text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square"></i> Rename File (Optional):
+              </label>
+              <button type="button" id="resetNameBtn" class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+                Reset Original Name
+              </button>
+            </div>
+            <div class="relative">
+              <input 
+                type="text" 
+                id="customFileName" 
+                placeholder="Click here to specify custom file name..."
+                class="w-full bg-white dark:bg-slate-950 border border-blue-200 dark:border-blue-800 text-slate-900 dark:text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 font-medium shadow-xs"
+              >
+            </div>
+          </div>
+
+          <!-- Mode Toggle Tabs (Both, Video Only, Audio Only) -->
+          <div class="mt-5">
+            <div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl gap-1 text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <button 
+                type="button" 
+                id="tabBoth" 
+                onclick="switchTab('both')"
+                class="flex-1 py-2.5 px-3 rounded-lg transition text-center flex items-center justify-center gap-1.5 bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm"
+              >
+                <i class="fa-solid fa-film"></i>
+                <span>Video + Audio</span>
+              </button>
+              <button 
+                type="button" 
+                id="tabVideoOnly" 
+                onclick="switchTab('video_only')"
+                class="flex-1 py-2.5 px-3 rounded-lg transition text-center flex items-center justify-center gap-1.5 hover:text-slate-900 dark:hover:text-white"
+              >
+                <i class="fa-solid fa-video-slash"></i>
+                <span>Video Only</span>
+              </button>
+              <button 
+                type="button" 
+                id="tabAudioOnly" 
+                onclick="switchTab('audio_only')"
+                class="flex-1 py-2.5 px-3 rounded-lg transition text-center flex items-center justify-center gap-1.5 hover:text-slate-900 dark:hover:text-white"
+              >
+                <i class="fa-solid fa-music"></i>
+                <span>Audio Only (MP3)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Format List -->
+          <div class="mt-4">
+            <div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800/80" id="formatsContainer">
+              <!-- Dynamic format rows inserted by app.js -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950 py-5 text-center text-xs text-slate-400 mt-auto">
+      <p>Primordial Media Engine • Universal High-Speed Downloader</p>
+    </footer>
+
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- MODAL: DOWNLOAD PROGRESS WITH LIVE %       -->
+  <!-- ========================================== -->
+  <div id="downloadModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl relative">
+      <button id="cancelDlBtn" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-white text-base">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <div class="flex items-center gap-3.5 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl flex-shrink-0" id="dlIcon">
+          <i class="fa-solid fa-arrow-down animate-bounce"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white truncate" id="dlFileName">Downloading...</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5" id="dlStatusMessage">Preparing media...</p>
+        </div>
+      </div>
+
+      <!-- Live Progress Bar -->
+      <div class="mb-3.5">
+        <div class="flex justify-between items-center text-xs mb-1.5 font-mono">
+          <span id="dlDetailsText" class="text-slate-500 dark:text-slate-400">Processing media...</span>
+          <span id="dlPercentText" class="font-bold text-blue-600 dark:text-blue-400 text-sm">0%</span>
+        </div>
+        <div class="w-full bg-slate-100 dark:bg-slate-800 h-3 rounded-full overflow-hidden">
+          <div id="dlProgressBar" class="bg-blue-600 h-full w-0 transition-all duration-200 rounded-full"></div>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center text-[11px] text-slate-400 font-mono">
+        <span id="dlSpeedText">-- MB/s</span>
+        <span id="dlEtaText">ETA --:--</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- MODAL: APP SHARE / QR CODE                -->
+  <!-- ========================================== -->
+  <div id="qrModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-7 max-w-sm w-full text-center shadow-2xl relative">
+      <button id="closeQrBtn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-base p-1">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-3 text-xl shadow-inner">
+        <i class="fa-solid fa-qrcode"></i>
+      </div>
+      <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">Get Primordial on Another Device</h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+        Choose target device and scan with camera to download directly
+      </p>
+
+      <!-- Target Device Selector Tabs (Phone / PC) -->
+      <div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl gap-1 text-xs font-semibold mb-4">
+        <button 
+          type="button" 
+          id="qrTabPhone" 
+          onclick="setQrTarget('phone')"
+          class="flex-1 py-2 px-2.5 rounded-lg transition text-center flex items-center justify-center gap-1.5 bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm"
+        >
+          <i class="fa-brands fa-android"></i>
+          <span>📱 Android APK</span>
+        </button>
+        <button 
+          type="button" 
+          id="qrTabPc" 
+          onclick="setQrTarget('pc')"
+          class="flex-1 py-2 px-2.5 rounded-lg transition text-center flex items-center justify-center gap-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+        >
+          <i class="fa-brands fa-windows"></i>
+          <span>💻 Windows PC Setup</span>
+        </button>
+      </div>
+
+      <!-- QR Code Display Box -->
+      <div class="bg-white p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm inline-block mb-4">
+        <img id="qrImage" src="" alt="QR Code" class="w-48 h-48 mx-auto rounded-lg">
+      </div>
+
+      <p class="text-[11px] text-slate-400 dark:text-slate-500 mb-3">
+        Scan with camera to begin download directly on that device
+      </p>
+
+      <!-- Copyable Link Container -->
+      <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
+        <div class="flex-1 text-[11px] font-mono text-slate-700 dark:text-slate-300 truncate select-all text-left px-2" id="mobileUrlDisplay">
+          http://db.vegastar.top/MediaDownloader.apk
+        </div>
+        <button type="button" id="copyUrlBtn" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 shadow-xs transition">
+          Copy
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- FIRST-TIME WELCOME & USER GUIDE MODAL      -->
+  <!-- (Shown once on first launch, saved in localStore) -->
+  <!-- ========================================== -->
+  <div id="welcomeGuideModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative animate-fade-in text-left">
+      <!-- Close Button (X) -->
+      <button type="button" onclick="dismissWelcomeGuide()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-white p-2 rounded-xl transition text-base">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Icon & Header -->
+      <div class="flex items-center gap-3.5 mb-4 pr-8">
+        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+          ⚡
+        </div>
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">স্বাগতম Primordial Downloader-এ!</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">সাপোর্টেড প্ল্যাটফর্ম ও ব্যবহার নির্দেশিকা</p>
+        </div>
+      </div>
+
+      <!-- Supported Platforms Grid -->
+      <div class="mb-4">
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-2">সাপোর্টেড প্ল্যাটফর্মসমূহ</span>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center gap-2.5">
+            <i class="fa-brands fa-youtube text-red-500 text-base"></i>
+            <div>
+              <div class="font-bold text-slate-800 dark:text-slate-200">YouTube</div>
+              <div class="text-[10px] text-slate-400">4K, 1080p, MP3 Audio</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center gap-2.5">
+            <i class="fa-brands fa-facebook text-blue-600 text-base"></i>
+            <div>
+              <div class="font-bold text-slate-800 dark:text-slate-200">Facebook</div>
+              <div class="text-[10px] text-slate-400">Reels ও ভিডিও (HD/SD)</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center gap-2.5">
+            <i class="fa-brands fa-tiktok text-slate-900 dark:text-white text-base"></i>
+            <div>
+              <div class="font-bold text-slate-800 dark:text-slate-200">TikTok</div>
+              <div class="text-[10px] text-slate-400">No Watermark HD</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center gap-2.5">
+            <i class="fa-solid fa-globe text-emerald-500 text-base"></i>
+            <div>
+              <div class="font-bold text-slate-800 dark:text-slate-200">অন্যান্য সাইট</div>
+              <div class="text-[10px] text-slate-400">X, Reddit, Soundcloud</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Steps -->
+      <div class="p-3.5 bg-blue-50/70 dark:bg-blue-950/30 rounded-2xl border border-blue-100 dark:border-blue-900/40 mb-5 text-xs text-slate-600 dark:text-slate-300 space-y-1.5">
+        <div class="font-bold text-blue-700 dark:text-blue-400 mb-1 flex items-center gap-1.5">
+          <i class="fa-solid fa-circle-info"></i> কিভাবে সহজে ডাউনলোড করবেন:
+        </div>
+        <div class="flex items-start gap-1.5">
+          <span class="font-bold text-blue-600">১.</span> <span>যেকোনো ভিডিও বা অডিওর লিংক কপি করুন।</span>
+        </div>
+        <div class="flex items-start gap-1.5">
+          <span class="font-bold text-blue-600">২.</span> <span>ইনপুট বক্সে Paste করুন এবং <strong>Get Media</strong> চাপুন।</span>
+        </div>
+        <div class="flex items-start gap-1.5">
+          <span class="font-bold text-blue-600">৩.</span> <span>পছন্দের কোয়ালিটি বেছে নিয়ে ডাউনলোড শুরু করুন!</span>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button 
+        type="button" 
+        id="dismissWelcomeGuideBtn"
+        onclick="dismissWelcomeGuide()"
+        class="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition active:scale-98 flex items-center justify-center gap-2"
+      >
+        <span>বুঝেছি, শুরু করুন (Got It)</span>
+        <i class="fa-solid fa-check"></i>
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js?v=3.1"></script>
+</body>
+</html>
