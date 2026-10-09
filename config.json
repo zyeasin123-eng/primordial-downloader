@@ -1,9 +1,36 @@
 {
     "app_name": "Primordial Downloader",
+    "creator": "Primordial / Vegastar",
+    "creator_url": "http://db.vegastar.top/",
+    "phone": {
+        "latest_version": "29.2012.2",
+        "min_supported_version": "29.2012.2",
+        "force_update": false,
+        "broadcast_notice": "✨ Primordial v29.2012.2 Official Global Release is live. Zero ads, 100% free!",
+        "notice_url": "http://db.vegastar.top/",
+        "apk_download_url": "http://db.vegastar.top/MediaDownloader.apk",
+        "changelog": "• Official Global Release v29.2012.2\n• High-speed YouTube, TikTok & Facebook processing\n• Zero ads and 100% free mode"
+    },
+    "web": {
+        "broadcast_notice": "✨ Primordial Web Downloader: Fast, Ad-Free & Unlimited 4K Media Processing!",
+        "notice_url": "http://db.vegastar.top/",
+        "free_mode": true,
+        "server_connecting_notice": "Media Downloader is powered by a high-speed distributed cloud processing network.",
+        "apk_download_url": "http://db.vegastar.top/MediaDownloader.apk",
+        "pc_download_url": "http://db.vegastar.top/MediaDownloader_Setup.exe"
+    },
+    "pc": {
+        "latest_version": "29.2012.2",
+        "min_supported_version": "29.2012.2",
+        "force_update": false,
+        "broadcast_notice": "PC Engine Active - High speed background worker",
+        "notice_url": "http://db.vegastar.top/",
+        "fallback_pc_advice": "To bypass public queues and enable maximum personal speeds, run the Media Downloader Engine on your PC.",
+        "pc_download_url": "http://db.vegastar.top/MediaDownloader_Setup.exe",
+        "changelog": "• Windows background service optimizations\n• Direct local high-speed stream muxing"
+    },
     "latest_version": "29.2012.2",
     "min_supported_version": "29.2012.2",
-    "creator": "Primordial ",
-    "creator_url": "http://db.vegastar.top/",
     "broadcast_notice": "✨ Primordial v29.2012.2 Official Global Release is live. Zero ads, 100% free!",
     "notice_url": "http://db.vegastar.top/",
     "free_mode": true,
@@ -14,5 +41,5 @@
     "fallback_pc_advice": "To bypass public queues and enable maximum personal speeds, run the Media Downloader Engine on your PC.",
     "pc_download_url": "http://db.vegastar.top/MediaDownloader_Setup.exe",
     "apk_download_url": "http://db.vegastar.top/MediaDownloader.apk",
-    "changelog": "• Official Global Release v29.2012.2\\n• Windows background service and native engine optimizations\\n• High-speed YouTube, Facebook, TikTok, Instagram processing"
+    "changelog": "• Official Global Release v29.2012.2\n• Windows background service and native engine optimizations\n• High-speed YouTube, Facebook, TikTok, Instagram processing"
 }
